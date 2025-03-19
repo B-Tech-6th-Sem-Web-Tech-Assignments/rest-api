@@ -6,7 +6,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, "db.json");
 
-// Read database
 const readDB = () => {
   try {
     const data = fs.readFileSync(dbPath, "utf-8");
@@ -17,7 +16,6 @@ const readDB = () => {
   }
 };
 
-// Write to database
 const writeDB = (data) => {
   try {
     fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), "utf-8");
@@ -26,13 +24,10 @@ const writeDB = (data) => {
   }
 };
 
-// Get all employees
 export const getEmployees = () => readDB().employees;
 
-// Get an employee by ID
 export const getEmployeeById = (id) => getEmployees().find(emp => emp.id === id);
 
-// Add a new employee
 export const addEmployee = (employee) => {
   const db = readDB();
   employee.id = db.employees.length ? db.employees[db.employees.length - 1].id + 1 : 1;
@@ -41,7 +36,6 @@ export const addEmployee = (employee) => {
   return employee;
 };
 
-// Update an employee
 export const updateEmployee = (id, updatedData) => {
   const db = readDB();
   const index = db.employees.findIndex(emp => emp.id === id);
@@ -53,7 +47,6 @@ export const updateEmployee = (id, updatedData) => {
   return db.employees[index];
 };
 
-// Delete an employee
 export const deleteEmployee = (id) => {
   const db = readDB();
   const filteredEmployees = db.employees.filter(emp => emp.id !== id);
